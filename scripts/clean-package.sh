@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-IFS=$'\n'
 [ -n "$1" -a -n "$2" ] || {
 	echo "Usage: $0 <file> <directory>"
 	exit 1
@@ -12,10 +11,10 @@ cat "$1" | (
 	cd "$2"
 	while read entry; do
 		[ -n "$entry" ] || break
-		[ ! -d "$entry" ] || [ -L "$entry" ] && rm -f "$entry"
+		[ -f "$entry" ] && rm -f $entry
 	done
 )
-sort -r "$1" | (
+cat "$1" | (
 	cd "$2"
 	while read entry; do
 		[ -n "$entry" ] || break
